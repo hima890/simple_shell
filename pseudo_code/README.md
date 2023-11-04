@@ -1,0 +1,1 @@
+this file is for psudocode for every function in the project. 

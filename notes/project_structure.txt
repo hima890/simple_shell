@@ -1,0 +1,27 @@
+shell_project/
+    ├── README.md
+    ├── main.c             # Main file
+    ├── shell.h            # Header file for function prototypes
+    ├── utility/
+    │   ├── function1/     # Directory for function 1
+    │   │   ├── function1.c         # Function 1 implementation
+    │   │   ├── function1.h         # Function 1 header
+    │   │   ├── function1_test.c    # Function 1 test
+    │   │   ├── function1_flowchart.png  # Function 1 flowchart
+    │   │   ├── function1_pseudo.txt      # Function 1 pseudo code
+    │   │   └── README.md           # README for Function 1
+    │   ├── function2/     # Directory for function 2
+    │   │   ├── function2.c         # Function 2 implementation
+    │   │   ├── function2.h         # Function 2 header
+    │   │   ├── function2_test.c    # Function 2 test
+    │   │   ├── function2_flowchart.png  # Function 2 flowchart
+    │   │   ├── function2_pseudo.txt      # Function 2 pseudo code
+    │   │   └── README.md           # README for Function 2
+    │   ├── ...
+    ├── man/               # Manual pages for your shell
+    │   ├── shell.1
+    ├── flowcharts/        # Directory for general flowcharts
+    │   ├── general_flowchart.png   # General flowchart for the shell
+    ├── pseudo_code/       # Directory for general pseudo code
+    │   ├── general_pseudo.txt      # Pseudo code for the shell
+
