@@ -55,6 +55,7 @@ int main(int argc, char * const argv[]) {
             if (child_pid == 0) {
                 // This is the child process
                 execve(cmd_argv[0], cmd_argv, NULL);
+                free(line_buffer);
                 perror("Error executing command!");
                 exit(1); // Terminate the child process
             } else {

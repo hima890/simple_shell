@@ -10,26 +10,32 @@ int main() {
 
     child_pid = fork();
 
-    if (child_pid == -1) {
+    if (child_pid == -1)
+    {
         perror("fork");
         exit(1);
     }
 
-    if (child_pid == 0) {
+    if (child_pid == 0)
+    {
         // This is the child process
         printf("Child process is running\n");
         exit(0); // Terminate the child process
-    } else {
+    }
+    else
+    {
         // This is the parent process
         printf("Parent process is waiting for the child to finish...\n");
         wpid = wait(&status);
 
-        if (wpid == -1) {
+        if (wpid == -1)
+        {
             perror("wait");
             exit(1);
         }
 
-        if (WIFEXITED(status)) {
+        if (WIFEXITED(status))
+        {
             printf("Child process with PID %d exited with status %d\n", wpid, WEXITSTATUS(status));
         }
     }
