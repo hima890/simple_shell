@@ -70,6 +70,11 @@ int main(int argc, char * const argv[])
             
         }
         
+        if (access(cmd_name, X_OK) == 0)
+        {
+            // The user entered an absolute or relative path to the command
+            strncpy(absolute_path, cmd_name, PATH_MAX);
+        }
         /* Search for the command path assming first token is the command path */
         char *path = getenv("PATH"); /* Get the path info*/
         if (path == NULL) /* If the path empty*/
