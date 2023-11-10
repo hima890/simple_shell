@@ -9,7 +9,7 @@
 
 #define MAX_ARGS 100
 
-int main(int argc, char * const argv[])
+int main(int argc, char *const argv[])
 {
     while (1)
     {
@@ -17,20 +17,20 @@ int main(int argc, char * const argv[])
         size_t line_buffer_size = 0;
         ssize_t read;
         printf("$ ");
-        
+
         if ((read = getline(&line_buffer, &line_buffer_size, stdin)) == -1)
         {
             perror(argv[0]);
             free(line_buffer);
             continue;
         }
-        
+
         // Remove the newline character from the buffer
         line_buffer[read - 1] = '\0';
-        
+
         int argc = 0;
         char *cmd_argv[MAX_ARGS];
-        
+
         // Tokenize the input line
         char *token = strtok(line_buffer, " ");
         while (token != NULL && argc < MAX_ARGS)
@@ -43,7 +43,7 @@ int main(int argc, char * const argv[])
             token = strtok(NULL, " ");
         }
         cmd_argv[argc] = NULL; // Null-terminate the argument array
-        
+
         if (argc == 0)
         {
             // No command provided, continue to the next iteration
@@ -62,7 +62,7 @@ int main(int argc, char * const argv[])
             free(line_buffer);
             exit(exit_status);
         }
-        
+
         // Handle the "env" command
         if (strcmp(cmd_argv[0], "env") == 0)
         {
@@ -97,10 +97,10 @@ int main(int argc, char * const argv[])
 
             char *path_copy = strdup(path);
             int command_found_flag = 0;
-            
+
             const char *delim_2 = ":";
             char *path_token = strtok(path_copy, delim_2);
-            
+
             while (path_token != NULL)
             {
                 DIR *command_dir = opendir(path_token);
@@ -122,17 +122,17 @@ int main(int argc, char * const argv[])
                 {
                     perror(argv[0]);
                 }
-                
+
                 path_token = strtok(NULL, delim_2);
-                
+
                 if (command_found_flag == 1)
                 {
                     break;
                 }
             }
-            
+
             free(path_copy);
-            
+
             if (command_found_flag == 0)
             {
                 fprintf(stderr, "%s: command not found\n", argv[0]);
@@ -140,20 +140,20 @@ int main(int argc, char * const argv[])
                 continue;
             }
         }
-        
+
         // Create a child process and execute the command
         pid_t fork_processor, wpid;
         int status;
-        
+
         fork_processor = fork();
-        
+
         if (fork_processor == -1)
         {
             perror(argv[0]);
             free(line_buffer);
             continue;
         }
-        
+
         if (fork_processor == 0)
         {
             if (execve(absolute_path, cmd_argv, NULL) == -1)
@@ -174,6 +174,6 @@ int main(int argc, char * const argv[])
 
         free(line_buffer);
     }
-    
+
     return 0;
 }
