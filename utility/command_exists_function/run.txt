@@ -1,0 +1,4 @@
+run: gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *c -o test.
+output:
+/bin/ls exists and is executable.
+nonexistentcommand does not exist or is not executable.
