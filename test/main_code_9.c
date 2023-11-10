@@ -13,7 +13,7 @@ int command_exists(char *cmd_name) {
     return access(cmd_name, X_OK) == 0;
 }
 
-int main(int argc, char * const argv[], char **env) {
+int main(int argc, char * const argv[]) {
     while (1) {
         char *line_buffer = NULL;
         size_t line_buffer_size = 0;
@@ -28,7 +28,7 @@ int main(int argc, char * const argv[], char **env) {
             // Print the prompt only if in interactive mode and it's not an exit command
             printf("$ ");
         }
-
+        
         if ((read = getline(&line_buffer, &line_buffer_size, stdin)) == -1) {
             if (feof(stdin)) {
                 // End of input reached, break out of the loop
@@ -78,13 +78,9 @@ int main(int argc, char * const argv[], char **env) {
         
         // Handle the "env" command
         if (strcmp(cmd_argv[0], "env") == 0) {
-            unsigned int i;
-
-            i = 0;
-            while (env[i] != NULL)
-            {
-                printf("%s\n", env[i]);
-                i++;
+            extern char **environ;
+            for (int i = 0; environ[i] != NULL; i++) {
+                printf("%s\n", environ[i]);
             }
             free(line_buffer);
             continue;
