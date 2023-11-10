@@ -1,0 +1,8 @@
+// Function prototypes
+int command_exists(const char *cmd_name);
+void print_prompt();
+void handle_exit(const char *argv0, char *line_buffer);
+void handle_env(char **env);
+void tokenize_input(char *line_buffer, char **cmd_argv, int *argc);
+char* find_command_path(const char *cmd_name, char *absolute_path, const char *env_path);
+void execute_command(const char *absolute_path, char **cmd_argv, const char *argv0);
