@@ -18,19 +18,15 @@ int main(int argc, char * const argv[]) {
         char *line_buffer = NULL;
         size_t line_buffer_size = 0;
         ssize_t read;
-        printf("$ ");
         
         // Read input line
-        if ((read = getline(&line_buffer, &line_buffer_size, stdin)) == -1)
-        {
-            if (feof(stdin))
-            {
+        printf("$ ");
+        if ((read = getline(&line_buffer, &line_buffer_size, stdin)) == -1) {
+            if (feof(stdin)) {
                 // End of input reached, break out of the loop
                 free(line_buffer);
                 break;
-            }
-            else
-            {
+            } else {
                 perror(argv[0]);
                 free(line_buffer);
                 continue;
@@ -38,8 +34,7 @@ int main(int argc, char * const argv[]) {
         }
         
         // Remove the newline character from the buffer if it exists
-        if ((read > 0) && (line_buffer[read - 1] == '\n'))
-        {
+        if ((read > 0) && (line_buffer[read - 1] == '\n')) {
             line_buffer[read - 1] = '\0';
         }
         
@@ -164,6 +159,6 @@ int main(int argc, char * const argv[]) {
 
         free(line_buffer);
     }
-
+    
     return 0;
 }
