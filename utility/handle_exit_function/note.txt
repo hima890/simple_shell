@@ -1,4 +1,9 @@
-Uncomment and add this:
+1. Uncomment and add the ceases.
+2. Run gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *c -o test
+3. Run ./test
+
+
+The reast of the test ceses:
 /**
 * Test case 2: 'exit' command with a custom status
 * char *cmd_argv2[] = {"exit", "42", NULL};
