@@ -1,0 +1,20 @@
+Uncomment and add this:
+/**
+* Test case 2: 'exit' command with a custom status
+* char *cmd_argv2[] = {"exit", "42", NULL};
+* char *line_buffer2 = my_strdup("exit 42");
+* handle_exit(cmd_argv2, line_buffer2);
+* If the function works correctly, it should exit with
+*  status 42, and this line won't be reached
+* printf("Test case 2 failed\n");
+* free(line_buffer2);
+*
+* Test case 3: Non-'exit' command
+* char *cmd_argv3[] = {"ls", "-l", NULL};
+* char *line_buffer3 = my_strdup("ls -l");
+* handle_exit(cmd_argv3, line_buffer3);
+* If the function works correctly, it should not
+* exit, and this line should be reached
+* printf("Test case 3 passed\n");
+* free(line_buffer3);
+*/
