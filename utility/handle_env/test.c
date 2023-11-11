@@ -16,8 +16,10 @@
 
 
 
-int main(int argc, char * const argv[], char **env) {
-    while (1) {
+int main(int argc, char * const argv[], char **env)
+{
+    while (1)
+    {
         char *line_buffer = NULL;
         size_t line_buffer_size = 0;
         ssize_t read;
@@ -25,17 +27,22 @@ int main(int argc, char * const argv[], char **env) {
         
         int is_interactive = isatty(STDIN_FILENO);
 
-        if (is_interactive) {
+        if (is_interactive)
+        {
             
             printf("$ ");
         }
 
-        if ((read = getline(&line_buffer, &line_buffer_size, stdin)) == -1) {
-            if (feof(stdin)) {
+        if ((read = getline(&line_buffer, &line_buffer_size, stdin)) == -1)
+        {
+            if (feof(stdin))
+            {
                 
                 free(line_buffer);
                 break;
-            } else {
+            }
+            else
+            {
                 perror(argv[0]);
                 free(line_buffer);
                 continue;
@@ -43,7 +50,8 @@ int main(int argc, char * const argv[], char **env) {
         }
 
        
-        if ((read > 0) && (line_buffer[read - 1] == '\n')) {
+        if ((read > 0) && (line_buffer[read - 1] == '\n'))
+        {
             line_buffer[read - 1] = '\0';
         }
 
@@ -52,8 +60,10 @@ int main(int argc, char * const argv[], char **env) {
 
         
         char *token = strtok(line_buffer, " ");
-        while (token != NULL && argc < MAX_ARGS) {
-            if (strcmp(token, "") != 0) {
+        while (token != NULL && argc < MAX_ARGS)
+        {
+            if (strcmp(token, "") != 0)
+            {
                 cmd_argv[argc] = token;
                 argc++;
             }
@@ -61,16 +71,19 @@ int main(int argc, char * const argv[], char **env) {
         }
         cmd_argv[argc] = NULL; 
 
-        if (argc == 0) {
+        if (argc == 0)
+        {
             
             free(line_buffer);
             continue;
         }
 
        
-        if (strcmp(cmd_argv[0], "exit") == 0) {
+        if (strcmp(cmd_argv[0], "exit") == 0)
+        {
             int exit_status = 0;
-            if (cmd_argv[1] != NULL) {
+            if (cmd_argv[1] != NULL)
+            {
                 exit_status = atoi(cmd_argv[1]);
             }
             free(line_buffer);
@@ -78,7 +91,8 @@ int main(int argc, char * const argv[], char **env) {
         }
 
         
-        if (strcmp(cmd_argv[0], "env") == 0) {
+        if (strcmp(cmd_argv[0], "env") == 0)
+        {
             handle_env(env);
             free(line_buffer);
             continue;
@@ -87,5 +101,5 @@ int main(int argc, char * const argv[], char **env) {
         
     }
 
-    return 0;
+    return (0);
 }
