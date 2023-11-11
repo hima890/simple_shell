@@ -1,0 +1,9 @@
+1. run: gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *c -o test
+2. run ./test
+
+##IN THE MAIN CODE DONT FORGET TO ADD:
+if (argc == 0) {
+    /* No command provided, continue to the next iteration */
+    free(line_buffer);
+    continue;
+}
