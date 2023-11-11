@@ -1,0 +1,4 @@
+1. From the utility folder copy every function file to the main root
+2. Add the functions protype to the main header file in the root
+3. Check for betty style
+4. Run the gcc
