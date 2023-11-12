@@ -13,7 +13,6 @@
  * 
  * Return: nothing function is of type void. 
 */
-
 void handle_env(char **env)
 {
     unsigned int i = 0;

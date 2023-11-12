@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include <limits.h>
 
+#define MAX_ARGS 16000
+
 int command_exists(char *cmd_name);
 void exit_command(char **cmd_argv, char *line_buffer);
 void handle_exit(char **cmd_argv, char *line_buffer);

@@ -63,5 +63,5 @@ char* find_command_path(const char *cmd_name, char *absolute_path, const char *e
         }
     }
     char *result = strdup(absolute_path);
-    return (result);
+	return (result);
 }
