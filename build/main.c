@@ -23,6 +23,7 @@ int main(int _arc, char *const argv[], char **env)
 		char *cmd_argv[MAX_ARGS];
 		char absolute_path[PATH_MAX];
 		char *cmd_name;
+		char *path = getenv("PATH");
 		int is_interactive = isatty(STDIN_FILENO);
 		pid_t fork_processor, wpid;
 		int status;
@@ -69,12 +70,10 @@ int main(int _arc, char *const argv[], char **env)
 		}
 		else if (strcmp(cmd_argv[0], "env") == 0)
 		{
-			extern char **environ;
 			int i;
-
-			for (i = 0; environ[i] != NULL; i++)
+			for (i = 0; env[i] != NULL; i++)
 			{
-				printf("%s\n", environ[i]);
+				printf("%s\n", env[i]);
 			}
 			for (i = 0; i < arc; i++)
 			{
@@ -86,18 +85,16 @@ int main(int _arc, char *const argv[], char **env)
 
 		cmd_name = cmd_argv[0];
 
-		if (command_exists(cmd_name))
+		if (command_exists(cmd_name) && (path != NULL))
 		{
 			strncpy(absolute_path, cmd_name, PATH_MAX);
 		}
 		else
 		{
-			char *path = getenv("PATH");
 			char *path_copy;
 			char *path_token;
 			const char *delim_2 = ":";
 			int command_found_flag = 0;
-
 			if (path == NULL)
 			{
 				fprintf(stderr, "%s: %d: %s: not found\n", argv[0], 1, cmd_name);
@@ -106,10 +103,13 @@ int main(int _arc, char *const argv[], char **env)
 				{
 					free(cmd_argv[i]);
 				}
-				
+				if (is_interactive == 0)
+				{
+					error = 1;
+				}
 				continue;
 			}
-
+			
 			path_copy = strdup(path);
 			path_token = strtok(path_copy, delim_2);
 
@@ -206,6 +206,6 @@ int main(int _arc, char *const argv[], char **env)
 	{
 		return (127);
 	}
-	
+
 	return (0);
 }
