@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <limits.h>
 
-#define MAX_ARGS 100
+#define MAX_ARGS 16000
 
 int command_exists(char *cmd_name) {
     return access(cmd_name, X_OK) == 0;

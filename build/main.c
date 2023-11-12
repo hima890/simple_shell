@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include "main.h"
-#define MAX_ARGS 100
+#define MAX_ARGS 16000
 
 int main(int arc, char *const argv[], char **env)
 {
