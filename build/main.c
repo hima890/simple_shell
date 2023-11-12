@@ -7,7 +7,8 @@
 #include <unistd.h>
 #include <limits.h>
 #include "main.h"
-#define MAX_ARGS 16000
+#define MAX_ARGS 2000000
+#define MAX_PATH_LEN 2000000
 
 int main(int _arc, char *const argv[], char **env)
 {
@@ -59,6 +60,7 @@ int main(int _arc, char *const argv[], char **env)
 			continue;
 		}
 
+		printf("Length of cmd_argv[0]: %ld\n", strlen(cmd_argv[0]));
 		if (strcmp(cmd_argv[0], "exit") == 0)
 		{
 			exit_command(cmd_argv);
@@ -77,7 +79,7 @@ int main(int _arc, char *const argv[], char **env)
 		}
 
 		cmd_name = cmd_argv[0];
-
+		printf("Length of cmd_name: %ld\n", strlen(cmd_name));
 		if (command_exists(cmd_name))
 		{
 			strncpy(absolute_path, cmd_name, PATH_MAX);
@@ -105,10 +107,32 @@ int main(int _arc, char *const argv[], char **env)
 
 			path_copy = strdup(path);
 			path_token = strtok(path_copy, delim_2);
+			if (path_copy == NULL)
+			{
+				perror("Error: Memory allocation failed");
+				free(line_buffer);
+				for (i = 0; i < arc; i++)
+				{
+					free(cmd_argv[i]);
+				}
+				continue;
+			}
 
 			while (path_token != NULL)
 			{
 				DIR *command_dir = opendir(path_token);
+
+				if (command_dir == NULL)
+				{
+					perror(argv[0]);
+					free(line_buffer);
+					for (i = 0; i < arc; i++)
+					{
+						free(cmd_argv[i]);
+					}
+					closedir(command_dir);
+					continue;
+				}
 
 				if (command_dir)
 				{
