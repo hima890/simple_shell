@@ -23,6 +23,7 @@ int main(int _arc, char *const argv[], char **env)
 		int is_interactive = isatty(STDIN_FILENO);
 		pid_t fork_processor, wpid;
 		int status;
+		int i;
 
 		if (is_interactive)
 		{
@@ -91,8 +92,14 @@ int main(int _arc, char *const argv[], char **env)
 
 			if (path == NULL)
 			{
+				int i;
+
 				perror(argv[0]);
 				free(line_buffer);
+				for (i = 0; i < arc; i++)
+				{
+					free(cmd_argv[i]);
+				}
 				continue;
 			}
 
@@ -130,7 +137,13 @@ int main(int _arc, char *const argv[], char **env)
 			free(path_copy);
 			if (command_found_flag == 0)
 			{
+				int i;
+
 				fprintf(stderr, "%s: %d: %s: not found\n", argv[0], __LINE__, cmd_name);
+				for (i = 0; i < arc; i++)
+				{
+					free(cmd_argv[i]);
+				}
 				free(line_buffer);
 				continue;
 			}
@@ -139,7 +152,13 @@ int main(int _arc, char *const argv[], char **env)
 
 		if (fork_processor == -1)
 		{
+			int i;
+
 			perror(argv[0]);
+			for (i = 0; i < arc; i++)
+			{
+				free(cmd_argv[i]);
+			}
 			free(line_buffer);
 			continue;
 		}
@@ -149,7 +168,7 @@ int main(int _arc, char *const argv[], char **env)
 			if (execve(absolute_path, cmd_argv, env) == -1)
 			{
 				perror(argv[0]);
-				exit(EXIT_FAILURE);
+				_exit(EXIT_FAILURE);
 			}
 			exit(EXIT_SUCCESS);
 		}
@@ -162,6 +181,10 @@ int main(int _arc, char *const argv[], char **env)
 			}
 		}
 		free(line_buffer);
+		for (i = 0; i < arc; i++)
+		{
+			free(cmd_argv[i]);
+		}
 	}
 
 	return (0);

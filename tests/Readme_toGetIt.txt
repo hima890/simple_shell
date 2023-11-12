@@ -4,3 +4,5 @@
 4. Run "/run ./hsh ./checker ./tests/simple_shell_0.1"
     |-- ./tests is a folder where the test case found
     |-- /simple_shell_0.1 is a test folder contenning the test files in the tests folder 
+
+    Run: ./run ./hsh ./checker ./tests/<task folder name>
