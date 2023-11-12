@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Raider/Desktop/ALXSE/simple_shell",
-      "program": "c:/Users/Raider/Desktop/ALXSE/simple_shell/build/Debug/outDebug",
+      "cwd": "c:/Users/Raider/Desktop/ALXSE/simple_shell/build",
+      "program": "c:/Users/Raider/Desktop/ALXSE/simple_shell/build/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

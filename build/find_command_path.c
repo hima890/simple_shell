@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * find_command_path - Searches for the absolute path 
+ * find_command_path - Searches for the absolute path
  * of a given command.
  * @cmd_name: The name of the command to find the path for.
  * @absolute_path: A buffer to store the absolute path of the command.
@@ -8,7 +8,7 @@
  * Return:A dynamically allocated string containing the absolute path to the command,
  *         or NULL if the command is not found or an error occurs.
  */
-char* find_command_path(const char *cmd_name, char *absolute_path, const char *env_path)
+char *find_command_path(const char *cmd_name, char *absolute_path, const char *env_path)
 {
     if (command_exists(cmd_name))
     {
@@ -63,5 +63,5 @@ char* find_command_path(const char *cmd_name, char *absolute_path, const char *e
         }
     }
     char *result = strdup(absolute_path);
-	return (result);
+    return (result);
 }

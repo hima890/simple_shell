@@ -18,7 +18,7 @@
  *
  * Example:
  *   Execute 'exit' command with custom status: `exit 42`
-*/
+ */
 void exit_command(char **cmd_argv, char *line_buffer)
 {
 	if (strcmp(cmd_argv[0], "exit") == 0)
