@@ -9,7 +9,7 @@
 #include "main.h"
 #define MAX_ARGS 16000
 
-int main(int arc, char *const argv[], char **env)
+int main(int _arc, char *const argv[], char **env)
 {
 	while (1)
 	{
@@ -52,7 +52,7 @@ int main(int arc, char *const argv[], char **env)
 
 		tokenize_input(line_buffer, cmd_argv, &arc, MAX_ARGS);
 
-		if (arc == 0)
+		if (_arc == 0)
 		{
 			free(line_buffer);
 			continue;
@@ -65,8 +65,9 @@ int main(int arc, char *const argv[], char **env)
 		else if (strcmp(cmd_argv[0], "env") == 0)
 		{
 			extern char **environ;
+			int i;
 
-			for (int i = 0; environ[i] != NULL; i++)
+			for (i = 0; environ[i] != NULL; i++)
 			{
 				printf("%s\n", environ[i]);
 			}
@@ -75,7 +76,6 @@ int main(int arc, char *const argv[], char **env)
 		}
 
 		cmd_name = cmd_argv[0];
-		absolute_path[PATH_MAX];
 
 		if (command_exists(cmd_name))
 		{
