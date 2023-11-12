@@ -1,2 +1,0 @@
-" jhgjhj " | ./hsh
-echo

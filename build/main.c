@@ -11,6 +11,9 @@
 
 int main(int _arc, char *const argv[], char **env)
 {
+	int is_interactive = isatty(STDIN_FILENO);
+	int error = 0;
+
 	while (1)
 	{
 		char *line_buffer = NULL;
@@ -41,7 +44,7 @@ int main(int _arc, char *const argv[], char **env)
 			}
 			else
 			{
-				perror(argv[0]);
+				printf("No such file or directory 0\n");
 				free(line_buffer);
 				continue;
 			}
@@ -97,12 +100,13 @@ int main(int _arc, char *const argv[], char **env)
 
 			if (path == NULL)
 			{
-				perror(argv[0]);
+				fprintf(stderr, "%s: %d: %s: not found\n", argv[0], 1, cmd_name);
 				free(line_buffer);
 				for (i = 0; i < arc; i++)
 				{
 					free(cmd_argv[i]);
 				}
+				
 				continue;
 			}
 
@@ -140,11 +144,16 @@ int main(int _arc, char *const argv[], char **env)
 			free(path_copy);
 			if (command_found_flag == 0)
 			{
-				fprintf(stderr, "%s: %d: %s: not found\n", argv[0], __LINE__, cmd_name);
+				fprintf(stderr, "%s: %d: %s: not found\n", argv[0], 1, cmd_name);
 				free(line_buffer);
 				for (i = 0; i < arc; i++)
 				{
 					free(cmd_argv[i]);
+				}
+
+				if (is_interactive == 0)
+				{
+					error = 1;
 				}
 				continue;
 			}
@@ -160,7 +169,7 @@ int main(int _arc, char *const argv[], char **env)
 				free(cmd_argv[i]);
 			}
 			free(line_buffer);
-			continue;
+			exit(-1);
 		}
 
 		if (fork_processor == 0)
@@ -190,7 +199,13 @@ int main(int _arc, char *const argv[], char **env)
 		{
 			free(cmd_argv[i]);
 		}
+		
+		
 	}
-
+	if ((is_interactive == 0 )&& (error == 1))
+	{
+		return (127);
+	}
+	
 	return (0);
 }
