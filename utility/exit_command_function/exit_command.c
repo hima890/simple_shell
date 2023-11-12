@@ -19,7 +19,7 @@
  * Example:
  *   Execute 'exit' command with custom status: `exit 42`
 */
-void exit_command(char **cmd_argv)
+void exit_command(char **cmd_argv, char *line_buffer)
 {
 	if (strcmp(cmd_argv[0], "exit") == 0)
 	{
@@ -30,6 +30,7 @@ void exit_command(char **cmd_argv)
 			exit_status = atoi(cmd_argv[1]);
 		}
 
+		free(line_buffer);
 		exit(exit_status);
 	}
 }

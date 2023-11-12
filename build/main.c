@@ -7,8 +7,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include "main.h"
-#define MAX_ARGS 2000000
-#define MAX_PATH_LEN 2000000
+#define MAX_ARGS 16000
 
 int main(int _arc, char *const argv[], char **env)
 {
@@ -26,6 +25,7 @@ int main(int _arc, char *const argv[], char **env)
 		int status;
 		int i;
 
+		(void)_arc;
 		if (is_interactive)
 		{
 			printf("$ ");
@@ -54,16 +54,15 @@ int main(int _arc, char *const argv[], char **env)
 
 		tokenize_input(line_buffer, cmd_argv, &arc, MAX_ARGS);
 
-		if (_arc == 0)
+		if (arc == 0)
 		{
 			free(line_buffer);
 			continue;
 		}
 
-		printf("Length of cmd_argv[0]: %ld\n", strlen(cmd_argv[0]));
 		if (strcmp(cmd_argv[0], "exit") == 0)
 		{
-			exit_command(cmd_argv);
+			exit_command(cmd_argv, line_buffer);
 		}
 		else if (strcmp(cmd_argv[0], "env") == 0)
 		{
@@ -74,12 +73,16 @@ int main(int _arc, char *const argv[], char **env)
 			{
 				printf("%s\n", environ[i]);
 			}
+			for (i = 0; i < arc; i++)
+			{
+				free(cmd_argv[i]);
+			}
 			free(line_buffer);
 			continue;
 		}
 
 		cmd_name = cmd_argv[0];
-		printf("Length of cmd_name: %ld\n", strlen(cmd_name));
+
 		if (command_exists(cmd_name))
 		{
 			strncpy(absolute_path, cmd_name, PATH_MAX);
@@ -94,8 +97,6 @@ int main(int _arc, char *const argv[], char **env)
 
 			if (path == NULL)
 			{
-				int i;
-
 				perror(argv[0]);
 				free(line_buffer);
 				for (i = 0; i < arc; i++)
@@ -107,32 +108,10 @@ int main(int _arc, char *const argv[], char **env)
 
 			path_copy = strdup(path);
 			path_token = strtok(path_copy, delim_2);
-			if (path_copy == NULL)
-			{
-				perror("Error: Memory allocation failed");
-				free(line_buffer);
-				for (i = 0; i < arc; i++)
-				{
-					free(cmd_argv[i]);
-				}
-				continue;
-			}
 
 			while (path_token != NULL)
 			{
 				DIR *command_dir = opendir(path_token);
-
-				if (command_dir == NULL)
-				{
-					perror(argv[0]);
-					free(line_buffer);
-					for (i = 0; i < arc; i++)
-					{
-						free(cmd_argv[i]);
-					}
-					closedir(command_dir);
-					continue;
-				}
 
 				if (command_dir)
 				{
@@ -161,14 +140,12 @@ int main(int _arc, char *const argv[], char **env)
 			free(path_copy);
 			if (command_found_flag == 0)
 			{
-				int i;
-
 				fprintf(stderr, "%s: %d: %s: not found\n", argv[0], __LINE__, cmd_name);
+				free(line_buffer);
 				for (i = 0; i < arc; i++)
 				{
 					free(cmd_argv[i]);
 				}
-				free(line_buffer);
 				continue;
 			}
 		}
@@ -176,9 +153,8 @@ int main(int _arc, char *const argv[], char **env)
 
 		if (fork_processor == -1)
 		{
-			int i;
-
 			perror(argv[0]);
+			
 			for (i = 0; i < arc; i++)
 			{
 				free(cmd_argv[i]);
@@ -192,7 +168,12 @@ int main(int _arc, char *const argv[], char **env)
 			if (execve(absolute_path, cmd_argv, env) == -1)
 			{
 				perror(argv[0]);
-				_exit(EXIT_FAILURE);
+				free(line_buffer);
+				for (i = 0; i < arc; i++)
+				{
+					free(cmd_argv[i]);
+				}
+				exit(EXIT_FAILURE);
 			}
 			exit(EXIT_SUCCESS);
 		}
