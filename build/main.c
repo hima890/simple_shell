@@ -1,6 +1,8 @@
 #include "main.h"
 int main(int _arc, char *const argv[], char **env)
 {
+	int is_interactive = isatty(STDIN_FILENO);
+	int error = 0;
 	while (1)
 	{
 		char *line_buffer = NULL;
@@ -10,6 +12,7 @@ int main(int _arc, char *const argv[], char **env)
 		char *cmd_argv[MAX_ARGS];
 		char absolute_path[PATH_MAX];
 		char *cmd_name;
+		
 
 		pid_t fork_processor, wpid;
 		int status;
@@ -58,15 +61,19 @@ int main(int _arc, char *const argv[], char **env)
 		}
 		cmd_name = cmd_argv[0];
 
-		if (find_command_path(cmd_name, absolute_path, getenv("PATH")) == NULL)
+		if ((find_command_path(cmd_name, absolute_path, cmd_argv, is_interactive, &error, argv)) == NULL)
 		{
 			free(line_buffer);
 			for (i = 0; i < arc; i++)
 			{
 				free(cmd_argv[i]);
 			}
+			if (is_interactive == 0)
+			{
+				error = 1;
+			}
 			continue;
-		}
+		}	
 		fork_processor = fork();
 		if (fork_processor == -1)
 		{
@@ -106,6 +113,10 @@ int main(int _arc, char *const argv[], char **env)
 		{
 			free(cmd_argv[i]);
 		}
+	}
+	if ((is_interactive == 0 ) && (error == 1))
+	{
+		return (127);
 	}
 	return (0);
 }
