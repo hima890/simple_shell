@@ -59,6 +59,7 @@
   "C_Cpp.errorSquiggles": "disabled",
   "files.associations": {
     "unistd.h": "c",
-    "AA.C": "cpp"
+    "AA.C": "cpp",
+    "dirent.h": "c"
   }
 }
