@@ -5,6 +5,7 @@
  * exit_command - Execute a command, handling special cases.
  *
  * @cmd_argv: Array of strings with command and arguments.
+ * @line_buffer: A string holding the input
  *
  * Description:
  *   Checks if the command is 'exit'. If true, it terminates the program

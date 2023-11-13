@@ -12,7 +12,6 @@ int main(int _arc, char *const argv[], char **env)
 		char *cmd_argv[MAX_ARGS];
 		char absolute_path[PATH_MAX];
 		char *cmd_name;
-		
 
 		pid_t fork_processor, wpid;
 		int status;
@@ -73,7 +72,7 @@ int main(int _arc, char *const argv[], char **env)
 				error = 1;
 			}
 			continue;
-		}	
+		}
 		fork_processor = fork();
 		if (fork_processor == -1)
 		{
@@ -114,7 +113,7 @@ int main(int _arc, char *const argv[], char **env)
 			free(cmd_argv[i]);
 		}
 	}
-	if ((is_interactive == 0 ) && (error == 1))
+	if ((is_interactive == 0) && (error == 1))
 	{
 		return (127);
 	}

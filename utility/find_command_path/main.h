@@ -11,6 +11,6 @@
 #define MAX_ARGS 100
 
 int command_exists(char *cmd_name);
-char* find_command_path(const char *cmd_name, char *absolute_path, const char *env_path);
+char *f_path(char *cmd, char *abs, int is, int *er, char *const *argv);
 
 #endif /* MAIN_H */
