@@ -1,4 +1,5 @@
 #include "main.h"
+#define DEFAULT_PATH "/bin:/usr/bin:/sbin:/usr/sbin"
 
 /**
  * find - Find the command in a specific directory.
@@ -9,24 +10,24 @@
  */
 static int find(char *cmd, char *path, char *abs)
 {
-	DIR *command_dir = opendir(path);
+    DIR *command_dir = opendir(path);
 
-	if (command_dir)
-	{
-		struct dirent *ent;
+    if (command_dir)
+    {
+        struct dirent *ent;
 
-		while ((ent = readdir(command_dir)) != NULL)
-		{
-			if (ent->d_type == DT_REG && strcmp(ent->d_name, cmd) == 0)
-			{
-				snprintf(abs, PATH_MAX, "%s/%s", path, ent->d_name);
-				closedir(command_dir);
-				return (1);
-			}
-		}
-		closedir(command_dir);
-	}
-	return (0);
+        while ((ent = readdir(command_dir)) != NULL)
+        {
+            if (ent->d_type == DT_REG && strcmp(ent->d_name, cmd) == 0)
+            {
+                snprintf(abs, PATH_MAX, "%s/%s", path, ent->d_name);
+                closedir(command_dir);
+                return (1);
+            }
+        }
+        closedir(command_dir);
+    }
+    return (0);
 }
 
 /**
@@ -38,34 +39,34 @@ static int find(char *cmd, char *path, char *abs)
  */
 static int search_directories(char *cmd, char *pc, char *abs)
 {
-	const char *delim_2 = ":";
-	char *pk;
+    const char *delim_2 = ":";
+    char *pk;
 
-	for (pk = strtok(pc, delim_2); pk; pk = strtok(NULL, delim_2))
-	{
-		if (find(cmd, pk, abs))
-			return (1);
-	}
+    for (pk = strtok(pc, delim_2); pk; pk = strtok(NULL, delim_2))
+    {
+        if (find(cmd, pk, abs))
+            return (1);
+    }
 
-	return (0);
+    return (0);
 }
 
 /**
- * handel_cnf - Handle case when the command is not found.
+ * handle_cnf - Handle case when the command is not found.
  * @cmd: Name of the command.
  * @is: Flag for interactive shell mode.
  * @er: Pointer to an error indicator.
  * @argv: Array of command-line arguments.
  * Return: NULL.
  */
-static char *handel_cnf(char *cmd, int is, int *er, char *const *argv)
+static char *handle_cnf(char *cmd, int is, int *er, char *const *argv)
 {
-	fprintf(stderr, "%s: %d: %s: not found\n", argv[0], 1, cmd);
+    fprintf(stderr, "%s: %d: %s: not found\n", argv[0], 1, cmd);
 
-	if (!is)
-		*er = 1;
+    if (!is)
+        *er = 1;
 
-	return (NULL);
+    return (NULL);
 }
 
 /**
@@ -79,27 +80,33 @@ static char *handel_cnf(char *cmd, int is, int *er, char *const *argv)
  */
 char *f_path(char *cmd, char *abs, int is, int *er, char *const *argv)
 {
-	char *path = getenv("PATH");
-	char *pc;
-	int command_found;
+    char *path = getenv("PATH");
+    char *pc;
+    int command_found;
 
-	if (command_exists(cmd) && path)
+	if(!path)
 	{
-		strncpy(abs, cmd, PATH_MAX);
-	}
-	else
-	{
-		if (!path)
-			return (handel_cnf(cmd, is, er, argv));
-
-		pc = strdup(path);
-		command_found = search_directories(cmd, pc, abs);
-
-		free(pc);
-
-		if (!command_found)
-			return (handel_cnf(cmd, is, er, argv));
+		setenv("PATH", DEFAULT_PATH, 1);
+		path = getenv("PATH");
 	}
 
-	return (abs);
+    if (command_exists(cmd) && path)
+    {
+        strncpy(abs, cmd, PATH_MAX);
+    }
+    else
+    {
+        if (!path)
+            return (handle_cnf(cmd, is, er, argv));
+
+        pc = strdup(path);
+        command_found = search_directories(cmd, pc, abs);
+
+        free(pc);
+
+        if (!command_found)
+            return (handle_cnf(cmd, is, er, argv));
+    }
+
+    return (abs);
 }

@@ -5,6 +5,7 @@
  * exit_command - Execute a command, handling special cases.
  *
  * @cmd_argv: Array of strings with command and arguments.
+ * @line_buffer: A string holding the input
  *
  * Description:
  *   Checks if the command is 'exit'. If true, it terminates the program
@@ -18,7 +19,7 @@
  *
  * Example:
  *   Execute 'exit' command with custom status: `exit 42`
-*/
+ */
 void exit_command(char **cmd_argv, char *line_buffer)
 {
 	if (strcmp(cmd_argv[0], "exit") == 0)

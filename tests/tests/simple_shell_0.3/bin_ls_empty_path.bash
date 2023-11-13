@@ -43,7 +43,6 @@ function check_setup()
 {
 	OLDPATH="$PATH"
 	unset PATH
-
 	return 0
 }
 
