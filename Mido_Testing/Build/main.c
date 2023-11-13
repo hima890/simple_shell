@@ -82,6 +82,40 @@ int main(int _arc, char *const argv[], char **env)
 			free(line_buffer);
 			continue;
 		}
+		else if (strcmp(cmd_argv[0], "setenv") == 0)
+        {
+            if (arc < 3)
+            {
+                fprintf(stderr, "Usage: setenv VARIABLE_NAME variable_value\n");
+            }
+            else
+            {
+                int result = setenv(cmd_argv[1], cmd_argv[2], 1); 
+                if (result != 0)
+                {
+                    perror("setenv");
+                }
+            }
+            free(line_buffer);
+            continue;
+        }
+		else if (strcmp(cmd_argv[0], "unsetenv") == 0)
+        {
+            if (arc < 2)
+            {
+                fprintf(stderr, "Usage: unsetenv VARIABLE_NAME\n");
+            }
+            else
+            {
+                int result = unsetenv(cmd_argv[1]);
+                if (result != 0)
+                {
+                    perror("unsetenv");
+                }
+            }
+            free(line_buffer);
+            continue;
+        }
 
 		cmd_name = cmd_argv[0];
 
