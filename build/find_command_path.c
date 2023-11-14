@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "main.h"
 /**
  * f_pt - Find the abolute pt of a command in the system pt.
