@@ -15,7 +15,7 @@
  * Return:
  *   0 if the command exists and is executable.
  *  -1 if the command does not exist or is not executable.
- */
+*/
 
 int command_exists(char *cmd_name)
 {
