@@ -2,77 +2,60 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+/**
+ * isNumeric - Check if a string is a numeric value.
+ * @str: The string to check.
+ * Return: 1 if numeric, 0 otherwise.
+ */
 int isNumeric(const char *str)
 {
-    char *endptr;
+	char *endptr;
 
-    strtol(str, &endptr, 10);
-    return (*endptr == '\0');
+	strtol(str, &endptr, 10);
+	return (*endptr == '\0');
 }
 
-
 /**
- * exit_command - Execute a command, handling special cases.
+ * exit_command - Execute the 'exit' command, handling special cases.
  *
- * @cmd_argv: Array of strings with command and arguments.
- * @line_buffer: A string holding the input
- *
- * Description:
- *   Checks if the command is 'exit'. If true, it terminates the program
- *   with an optional status obtained from command arguments.
- *
- * Parameters:
- *   - cmd_argv: Array of strings containing the command and arguments.
- *
- * Note:
- *   Exit status is 0 if no argument is provided.
- *
- * Example:
- *   Execute 'exit' command with custom status: `exit 42`
+ * @cv: Array of strings with command and arguments.
+ * @lb: A string holding the input.
+ * @error: The error indicator.
+ * @arc: The number of arguments.
+ * @argv: Array of command-line arguments.
  */
-void exit_command(char **cmd_argv, char *line_buffer, int error, int arc, char *const *argv)
+void exit_command(char **cv, char *lb, int error, int arc, char *const *argv)
 {
-    int exit_status = 0;
-    int i;
+	int es = 0;
+	int i;
 
-    if (strcmp(cmd_argv[0], "exit") == 0)
-    {
-        if (cmd_argv[1] != NULL)
-        {
-            if (!isNumeric(cmd_argv[1]))
-            {
-                fprintf(stderr, "%s: %d: exit: Illegal number: %s\n", argv[0], 1, cmd_argv[1]);
-                exit_status = 2;
-            }
-            else
-            {
-                exit_status = atoi(cmd_argv[1]);
-            }
+	if (strcmp(cv[0], "exit") == 0)
+	{
+		if (cv[1] != NULL)
+		{
+			if (!isNumeric(cv[1]))
+			{
+				fprintf(stderr, "%s: %d: exit: Illegal number: %s\n", argv[0], 1, cv[1]);
+				es = 2;
+			}
+			else
+			{
+				es = atoi(cv[1]);
+			}
 
-            if (exit_status < 0)
-            {
-                fprintf(stderr, "%s: %d: exit: Illegal number: %d\n", argv[0], 1, exit_status);
-                exit_status = 2;
-            }
-        }
-
+			if (es < 0)
+			{
+				fprintf(stderr, "%s: %d: exit: Illegal number: %d\n", argv[0], 1, es);
+				es = 2;
+			}
+		}
 		if (error == 2)
 		{
-			free(line_buffer);
-			for (i = 0; i < arc; i++)
-			{
-				free(cmd_argv[i]);
-			}
+			free_resources(lb, cv, arc);
 			exit(error);
 		}
 
-        free(line_buffer);
-        for (i = 0; i < arc; i++)
-        {
-            free(cmd_argv[i]);
-        }
-
-        exit(exit_status);
-    }
+		free_resources(lb, cv, arc);
+		exit(es);
+	}
 }

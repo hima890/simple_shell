@@ -1,4 +1,15 @@
 #include "main.h"
+/**
+ * main - Simple shell program that reads commands from the standard input or
+ *        from a script file, executes them, and prints the result to the
+ *        standard output.
+ *
+ * @argc: Number of command-line arguments.
+ * @argv: Array of strings containing the command-line arguments.
+ * @env: Array of strings representing the environment variables.
+ *
+ * Return: The exit status of the shell program.
+*/
 int main(int _arc, char *const argv[], char **env)
 {
 	int is_interactive = isatty(STDIN_FILENO);
