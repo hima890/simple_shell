@@ -78,22 +78,44 @@ static char *handle_cnf(char *cmd, int is, int *er, char *const *argv)
  * @argv: Array of command-line arguments.
  * Return: Absolute path of the command on success, NULL on failure.
  */
-char *f_path(char *cmd, char *abs, int is, int *er, char *const *argv)
+char *f_path(char *cmd, char *abs, int is, int *er, char *const *argv, char **env)
 {
     char *path = getenv("PATH");
+    char *new = getenv("PATH1");
     char *pc;
     int command_found;
-
+    unsigned int i = 0;
 	if(!path)
 	{
-		setenv("PATH", DEFAULT_PATH, 1);
-		path = getenv("PATH");
+        setenv("PATH", DEFAULT_PATH, 1);
+        path = getenv("PATH");
 	}
+
+    if (new)
+    {
+        path = NULL;
+    }
+    while (env[i] != NULL)
+    {
+        i++;
+    }
+    
+    
+    if (i <= 2)
+    {
+        path = NULL;
+    }
+
 
     if (command_exists(cmd) && path)
     {
         strncpy(abs, cmd, PATH_MAX);
     }
+    if (strchr(cmd, '/') != NULL)
+    {
+        strncpy(abs, cmd, PATH_MAX);
+    }
+    
     else
     {
         if (!path)
