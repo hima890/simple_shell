@@ -60,7 +60,7 @@ int main(int _arc, char *const argv[], char **env)
 		}
 		cmd_name = cmd_argv[0];
 
-		if ((f_path(cmd_name, absolute_path, is_interactive, &error, argv)) == NULL)
+		if ((f_path(cmd_name, absolute_path, is_interactive, &error, argv, env)) == NULL)
 		{
 			free(line_buffer);
 			for (i = 0; i < arc; i++)

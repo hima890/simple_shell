@@ -16,7 +16,7 @@ int command_exists(char *cmd_name);
 void exit_command(char **cmd_argv, char *line_buffer);
 void handle_exit(char **cmd_argv, char *line_buffer);
 void tokenize_input(char *line_buffer, char **cmd_argv, int *argc, int max);
-char *f_path(char *cmd, char *abs, int is, int *er, char *const *argv);
+char *f_path(char *cmd, char *abs, int is, int *er, char *const *argv, char **env);
 void handle_env(char **env);
 void print_prompt();
 
