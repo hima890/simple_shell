@@ -60,6 +60,7 @@
   "files.associations": {
     "unistd.h": "c",
     "AA.C": "cpp",
-    "dirent.h": "c"
+    "dirent.h": "c",
+    "string.h": "c"
   }
 }
