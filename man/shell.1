@@ -1,0 +1,73 @@
+SIMPLE_SHELL(1)                  User Commands                 SIMPLE_SHELL(1)
+
+NAME
+       simple_shell - a simple UNIX command-line interpreter
+
+SYNOPSIS
+       simple_shell
+
+DESCRIPTION
+       simple_shell is a basic command-line interpreter that mimics the func-
+       tionality of the shell (/bin/sh). It is designed to meet specific
+       requirements and follows the guidelines outlined in the project
+       documentation.
+
+OPTIONS
+       None
+
+INTERACTIVE MODE
+       Launch the simple_shell in interactive mode by running it without any
+       arguments:
+
+       $ simple_shell
+
+       Once in interactive mode, you can enter commands at the prompt and the
+       shell will execute them.
+
+NON-INTERACTIVE MODE
+       You can use simple_shell in non-interactive mode by providing commands
+       via a pipeline or a script:
+
+       $ echo "ls -l" | simple_shell
+       $ simple_shell < script_file
+
+COMMANDS
+       simple_shell supports basic UNIX commands. It does not support special
+       characters, pipes, or advanced features.
+
+EXIT STATUS
+       The simple_shell command exits with the following status codes:
+
+       0   Successful execution
+       1   General error
+       2   Command not found
+
+EXAMPLES
+       $ simple_shell
+       ($) /bin/ls
+       hsh main.c shell.c
+       ($)
+       ($) exit
+       $
+
+       $ echo "/bin/ls" | simple_shell
+       hsh main.c shell.c test_ls_2
+       $
+
+AUTHORS
+       The simple_shell command was created by the following authors:
+
+       - [https://github.com/hima890]
+       - [https://github.com/Ahmed-basher-Github]
+       - ...
+
+BUGS
+       Report any bugs to the GitHub repository: [repository_link]
+
+SEE ALSO
+       [Reference any other relevant man pages or external documentation.]
+
+COPYRIGHT
+       This is free software: you are free to change and redistribute it.
+       There is NO WARRANTY, to the extent permitted by law.
+
