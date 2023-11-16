@@ -17,6 +17,7 @@ This project involves creating a simple UNIX command-line interpreter in C that 
    - [Task 7: Simple shell 0.2.1](#task-7-simple-shell-021)
    - [Task 8: Simple shell 0.4.1](#task-8-simple-shell-041)
 5. [Authors](#authors)
+6. [Project Structure](#project-structure)
 
 ## Requirements<a name="requirements"></a>
 
@@ -116,8 +117,9 @@ $
 
 - List all individuals who contributed to the repository in the AUTHORS file. Follow the format used in Docker.
 
+## Project Structure<a name="project-structure"></a>
 
-bash
+```bash
 /SIMPLE_SHELL
     ├── README.md
     ├── AUTHORS
@@ -153,38 +155,4 @@ bash
     │   ├── general_flowchart.png      # General flowchart for the shell
     ├── pseudo_code/                   # Directory for general pseudo code
     │   ├── general_pseudo.txt         # Pseudo code for the shell
-    ├── concepts/                      # Directory for general concepts
-    │   ├── concept/                   # Directory for concepts
-    │   │   ├── function1.c           # Function 1 implementation
-    │   │   ├── function1.h           # Function 1 header
-    │   │   ├── function1_test.c      # Function 1 test
-    │   │   ├── function1_flowchart.png   # Function 1 flowchart
-    │   │   ├── function1_pseudo.txt  # Function 1 pseudo code
-    │   │
-    │   ├── the_main_code/             # Directory for the main code versions
-    │   │   ├── main_code_1
-    │   │   ├── main_code_2
-    │   │   ├── ... 
-    │   ├── notes/                      # Directory for general notes
-    │   ├── tests/                      # Directory for testing the main code
-    
-Project Structure
-This project follows a structured directory layout to enhance clarity and organization. Below is an overview of each directory:
-
-Build: Contains the main code and header files. The main code is divided into multiple functions for better modularity.
-
-Utility: Houses utility functions organized into separate directories for each function. Each directory includes implementation, header, test, flowchart, and pseudo code files.
-
-Man: Includes manual pages for the shell, such as shell.1.
-
-Flowcharts: Contains general flowcharts representing the overall flow of the shell.
-
-Pseudo_code: Holds general pseudo code outlining the logic and functionality of the shell.
-
-Concepts: Contains directories for various concepts, each comprising implementation, header, test, flowchart, and pseudo code files.
-
-The_Main_Code: Includes versions of the main code, organized into separate directories for each version.
-
-Notes: Reserved for general notes related to the project.
-
-Tests: Dedicated to testing the main code.
+    ├── concepts/
